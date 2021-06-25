@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 """Represents the base model to all classes for this project."""
+import models
 from uuid import uuid4
 from datetime import datetime
 

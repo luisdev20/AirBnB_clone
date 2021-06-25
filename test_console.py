@@ -17,5 +17,5 @@ class TestInit(unittest.TestCase):
         model_1 = BaseModel()
         self.assertEqual(model_1.updated_at, datetime.today())
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()
