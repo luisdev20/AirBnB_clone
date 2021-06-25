@@ -7,7 +7,7 @@ from datetime import datetime
 class BaseModel:
     """Defines a Base Model class to main methods."""
 
-    def __init__(self):
+    def __init__(self, *args, **kwargs):
         """Initialize public attributes
 
         Args:
