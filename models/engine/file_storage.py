@@ -6,8 +6,6 @@ from models.user import User
 import json
 
 
-classes = {"BaseModel" : BaseModel, "User": User}
-
 class FileStorage:
     """Serializes and deserializes JSON file to instances and vice
 
