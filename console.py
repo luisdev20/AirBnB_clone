@@ -41,7 +41,7 @@ class HBNBCommand(cmd.Cmd):
             print("** class doesn't exist **")
 
 def parse(arg):
-    "tokenize a string to a space divided 'arguments' tuple"
+    "tokenize a string to a sSpace divided 'arguments' tuple"
     return tuple(map(int, arg.split()))
 
 if __name__ == '__main__':
