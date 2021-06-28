@@ -2,7 +2,16 @@
 """Console that contains the entry point of the command interpreter."""
 import cmd
 from models.base_model import BaseModel
+from models.user import User
+from models.user import User
+from models.place import Place
+from models.state import State
+from models.city import City
+from models.amenity import Amenity
+from models.review import Review
 import models
+
+dic_objects = models.storage.all()
 
 class HBNBCommand(cmd.Cmd):
     """Defines a custom Holberton Command prompt
@@ -14,7 +23,12 @@ class HBNBCommand(cmd.Cmd):
     prompt = "(hbnb) "
     __classes = {
         "BaseModel",
-        "User"
+        "User",
+        "State",
+        "City",
+        "Amenity",
+        "Place",
+        "Review"
     }
 
     def do_quit(self, arg):
@@ -35,6 +49,8 @@ class HBNBCommand(cmd.Cmd):
         if len(arg_sp) == 0:
             print("** class name missing **")
         elif arg_sp[0] in HBNBCommand.__classes:
+            # Creamos nueva instancia de la forma NombreInstancia()
+            # Siendo NombreInstancia una clase, lo obtenemos con eval a partir de un string.
             new_ins = eval(arg_sp[0])()
             models.storage.save()
             print(new_ins.id)
@@ -44,7 +60,6 @@ class HBNBCommand(cmd.Cmd):
     def do_show(self, arg):
         """Prints the string representation of an instance based on
         the class name and id"""
-        dic_objects = models.storage.all()
 
         arg_sp = arg.split()
         if len(arg_sp) == 0:
@@ -60,7 +75,6 @@ class HBNBCommand(cmd.Cmd):
 
     def do_destroy(self, arg):
         """Deletes an instance based on the class name and id. Update the json file."""
-        dic_objects = models.storage.all()
 
         arg_sp = arg.split()
         if len(arg_sp) == 0:
@@ -81,7 +95,6 @@ class HBNBCommand(cmd.Cmd):
         Args (optional): 
             Class_name: to print instances of the given classname
         """
-        dic_objects = models.storage.all()
         arg_sp = arg.split()
         ouput_str = []
 
@@ -104,8 +117,6 @@ class HBNBCommand(cmd.Cmd):
 
         Usage: update <class name> <id> <attribute name> '<attribute value>'
         """
-        dic_objects = models.storage.all()
-
         arg_sp = arg.split(" ", 3)
 
         if len(arg_sp) == 0:
@@ -121,17 +132,13 @@ class HBNBCommand(cmd.Cmd):
         elif len(arg_sp) == 3:
             print("** value missing **")       
         else:
-        #    arg3 = eval(arg_sp[3])
-        #    arg31 = arg_sp[3]
-        #    if type(arg_sp[3]) is int or type(arg_sp[3]) is float:
-        #        setattr(dic_objects["{}.{}".format(arg_sp[0],arg_sp[1])], arg_sp[2], arg3)
-        #    elif type(arg31) is str:
-        #        setattr(dic_objects["{}.{}".format(arg_sp[0],arg_sp[1])], arg_sp[2], arg31)
             try:
                 setattr(dic_objects["{}.{}".format(arg_sp[0],arg_sp[1])], arg_sp[2], eval(arg_sp[3]))
             except NameError:
                 setattr(dic_objects["{}.{}".format(arg_sp[0],arg_sp[1])], arg_sp[2], arg_sp[3])
             models.storage.save()
+
+    
 
 def parse(arg):
     "tokenize a string to a space divided 'arguments' tuple"

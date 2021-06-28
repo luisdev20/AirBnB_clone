@@ -3,6 +3,11 @@
 
 from models.base_model import BaseModel
 from models.user import User
+from models.place import Place
+from models.state import State
+from models.city import City
+from models.amenity import Amenity
+from models.review import Review
 import json
 
 
@@ -38,13 +43,6 @@ class FileStorage:
         try:
             with open(self.__file_path, encoding="utf-8") as f:
                 jload = json.load(f)
-                """ for i, j in jload.items():
-                    if "BaseModel" in i:
-                        self.__objects[i] = BaseModel(**j)
-                    elif "User" in i: """
-                """Here will view the update of User class"""
-                """ self.__objects[i] = User(**j) """
-
                 """
                 -----------------------------------------------
                 Nos quedamos aqui:
