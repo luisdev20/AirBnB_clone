@@ -92,18 +92,50 @@ class HBNBCommand(cmd.Cmd):
             print(ouput_str) # Imprime la direccion de la clase
         elif arg_sp[0] not in HBNBCommand.__classes:
             print("** class doesn't exist **")
-            # imprimir las instancias UNICAMENTE de la clase dada
-        #   elif "{}".format(arg_sp[0]) in dic_objects.keys():
-        #   print(dic_objects["{}".format(arg_sp[0])])
         else:
             for objs in dic_objects.values():
                 if arg_sp[0] == objs.__class__.__name__:
                     ouput_str.append(objs.__str__())
             print(ouput_str)
 
+    def do_update(self, arg):
+        """Updates an instance based on the class name and id by add or update attribs.
+        Save the change into the JSON file
+
+        Usage: update <class name> <id> <attribute name> '<attribute value>'
+        """
+        dic_objects = models.storage.all()
+
+        arg_sp = arg.split(" ", 3)
+
+        if len(arg_sp) == 0:
+            print("** class name missing **")
+        elif arg_sp[0] not in HBNBCommand.__classes:
+            print("** class doesn't exist **")
+        elif len(arg_sp) == 1:
+            print("** instance id missing **")
+        elif "{}.{}".format(arg_sp[0],arg_sp[1]) not in dic_objects.keys():
+            print("** no instance found **")
+        elif len(arg_sp) == 2:
+            print("** attribute name missing **")
+        elif len(arg_sp) == 3:
+            print("** value missing **")       
+        else:
+        #    arg3 = eval(arg_sp[3])
+        #    arg31 = arg_sp[3]
+        #    if type(arg_sp[3]) is int or type(arg_sp[3]) is float:
+        #        setattr(dic_objects["{}.{}".format(arg_sp[0],arg_sp[1])], arg_sp[2], arg3)
+        #    elif type(arg31) is str:
+        #        setattr(dic_objects["{}.{}".format(arg_sp[0],arg_sp[1])], arg_sp[2], arg31)
+            try:
+                setattr(dic_objects["{}.{}".format(arg_sp[0],arg_sp[1])], arg_sp[2], eval(arg_sp[3]))
+            except NameError:
+                setattr(dic_objects["{}.{}".format(arg_sp[0],arg_sp[1])], arg_sp[2], arg_sp[3])
+            models.storage.save()
+
 def parse(arg):
-    "tokenize a string to a sSpace divided 'arguments' tuple"
-    return tuple(map(int, arg.split()))
+    "tokenize a string to a space divided 'arguments' tuple"
+    return arg.split()
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()

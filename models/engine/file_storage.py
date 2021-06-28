@@ -22,14 +22,14 @@ class FileStorage:
         return self.__objects
 
     def new(self, obj):
-        """Sets in __objects the obj with key <obj class name>.id"""
+        """Sets in __objects the obj with key: <obj class name>.id"""
         objname = obj.__class__.__name__
         self.__objects["{}.{}".format(objname, obj.id)] = obj
 
     def save(self):
         """Serializes __objects to the JSON file (path: __file_path)"""
         json_data = {key: obj.to_dict() for key, obj in self.__objects.items()}
-
+                                            # key: obj.to_dict()
         with open(self.__file_path, mode='w', encoding="utf-8") as json_f:
             json.dump(json_data, json_f)
 
