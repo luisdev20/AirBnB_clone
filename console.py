@@ -119,7 +119,7 @@ class HBNBCommand(cmd.Cmd):
 
         Usage: update <class name> <id> <attribute name> '<attribute value>'
         """
-        arg_sp = arg.split(" ")
+        arg_sp = arg.split()
 
         if len(arg_sp) == 0:
             print("** class name missing **")
