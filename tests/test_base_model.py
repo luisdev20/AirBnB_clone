@@ -28,6 +28,7 @@ class TestBaseModel(unittest.TestCase):
         )
 
     def test_attr_types(self):
+        
         self.assertIs(type(self.obj.id), str)
         self.assertIs(type(self.obj.created_at), datetime)
         self.assertIs(type(self.obj.updated_at), datetime)
@@ -172,6 +173,8 @@ class TestBaseModel(unittest.TestCase):
 
         self.assertEqual(self.obj.name, 'Jhon')
         self.assertEqual(self.obj.age, 46)
+
+    
 
 if __name__ == "__main__":
     unittest.main()

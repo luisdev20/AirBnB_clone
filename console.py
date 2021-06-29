@@ -139,7 +139,8 @@ class HBNBCommand(cmd.Cmd):
                 setattr(dic_objects[format_key], arg_sp[2], eval(arg_sp[3]))
             except NameError:
                 setattr(dic_objects[format_key], arg_sp[2], arg_sp[3])
-            models.storage.save()
+        
+        models.storage.save()
 
     def do_count(self, arg):
         # return self.do_all(arg).keys().count()

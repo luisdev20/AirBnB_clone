@@ -35,13 +35,13 @@ class FileStorage:
         """Serializes __objects to the JSON file (path: __file_path)"""
         json_data = {key: obj.to_dict() for key, obj in self.__objects.items()}
         # key: obj.to_dict()
-        with open(self.__file_path, mode='w', encoding="utf-8") as json_f:
+        with open(self.__file_path, mode='w') as json_f:
             json.dump(json_data, json_f)
 
     def reload(self):
         """Deserializes the JSON file to __objects"""
         try:
-            with open(self.__file_path, encoding="utf-8") as f:
+            with open(self.__file_path) as f:
                 jload = json.load(f)
                 for key, obj_atr in jload.items():
                     """class_name: Call to all class"""

@@ -2,7 +2,7 @@
 """Represents the base model to all classes for this project."""
 
 from uuid import uuid4
-from datetime import datetime
+from datetime import date, datetime
 import models
 
 
@@ -18,10 +18,10 @@ class BaseModel:
         id (str): Generate a random UUID
         created_at (time): Assign current datetime when instance is created.
         """
-
-        self.updated_at = datetime.today()
         self.id = str(uuid4())
         self.created_at = datetime.today()
+        self.updated_at = datetime.today()
+
         if len(kwargs) == 0:
             models.storage.new(self)
         else:
