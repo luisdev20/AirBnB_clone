@@ -34,7 +34,7 @@ class FileStorage:
     def save(self):
         """Serializes __objects to the JSON file (path: __file_path)"""
         json_data = {key: obj.to_dict() for key, obj in self.__objects.items()}
-                                            # key: obj.to_dict()
+        # key: obj.to_dict()
         with open(self.__file_path, mode='w', encoding="utf-8") as json_f:
             json.dump(json_data, json_f)
 
@@ -43,13 +43,6 @@ class FileStorage:
         try:
             with open(self.__file_path, encoding="utf-8") as f:
                 jload = json.load(f)
-                """
-                -----------------------------------------------
-                Nos quedamos aqui:
-                Corregir el User deberia salir BaseModel, tmb el doble corchete ex. [User]] 
-                Nos quedamos analizando el las lineas 59 y 60 por tema del diccionario.
-                -------------------------------------------------
-                """
                 for key, obj_atr in jload.items():
                     """class_name: Call to all class"""
                     class_name = obj_atr["__class__"]

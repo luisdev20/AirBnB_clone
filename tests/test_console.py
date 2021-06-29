@@ -5,6 +5,7 @@ import unittest
 from models.base_model import BaseModel
 from datetime import datetime
 
+
 class TestInit(unittest.TestCase):
     """Define unittest for __init__()."""
 
@@ -16,6 +17,7 @@ class TestInit(unittest.TestCase):
         """Test if updated_at is a datetime value."""
         model_1 = BaseModel()
         self.assertEqual(model_1.updated_at, datetime.today())
+
 
 if __name__ == '__main__':
     unittest.main()

@@ -12,7 +12,9 @@ from models.review import Review
 import models
 import re
 
+
 dic_objects = models.storage.all()
+
 
 class HBNBCommand(cmd.Cmd):
     """Defines a custom Holberton Command prompt
@@ -51,7 +53,6 @@ class HBNBCommand(cmd.Cmd):
             print("** class name missing **")
         elif arg_sp[0] in HBNBCommand.__classes:
             # Creamos nueva instancia de la forma NombreInstancia()
-            # Siendo NombreInstancia una clase, lo obtenemos con eval a partir de un string.
             new_ins = eval(arg_sp[0])()
             models.storage.save()
             print(new_ins.id)
@@ -69,13 +70,14 @@ class HBNBCommand(cmd.Cmd):
             print("** class doesn't exist **")
         elif len(arg_sp) == 1:
             print("** instance id missing **")
-        elif "{}.{}".format(arg_sp[0],arg_sp[1]) in dic_objects.keys():
-            print(dic_objects["{}.{}".format(arg_sp[0],arg_sp[1])])
+        elif "{}.{}".format(arg_sp[0], arg_sp[1]) in dic_objects.keys():
+            print(dic_objects["{}.{}".format(arg_sp[0], arg_sp[1])])
         else:
             print("** no instance found **")
 
     def do_destroy(self, arg):
-        """Deletes an instance based on the class name and id. Update the json file."""
+        """Deletes an instance based on the class name and id.
+        Update the json file."""
 
         arg_sp = arg.split()
         if len(arg_sp) == 0:
@@ -92,8 +94,8 @@ class HBNBCommand(cmd.Cmd):
 
     def do_all(self, arg):
         """Prints all string representation of all instances.
-        
-        Args (optional): 
+
+        Args (optional):
             Class_name: to print instances of the given classname
         """
         arg_sp = arg.split()
@@ -102,7 +104,7 @@ class HBNBCommand(cmd.Cmd):
             # imprimir todas las intancias de TODAS las clases
             for objs in dic_objects.values():
                 ouput_str.append(objs.__str__())
-            print(ouput_str) # Imprime la direccion de la clase
+            print(ouput_str)
         elif arg_sp[0] not in HBNBCommand.__classes:
             print("** class doesn't exist **")
         else:
@@ -130,7 +132,7 @@ class HBNBCommand(cmd.Cmd):
         elif len(arg_sp) == 2:
             print("** attribute name missing **")
         elif len(arg_sp) == 3:
-            print("** value missing **")       
+            print("** value missing **")
         else:
             format_key = "{}.{}".format(arg_sp[0], arg_sp[1])
             try:
@@ -140,7 +142,7 @@ class HBNBCommand(cmd.Cmd):
             models.storage.save()
 
     def do_count(self, arg):
-        #return self.do_all(arg).keys().count()
+        # return self.do_all(arg).keys().count()
         counter = 0
         for objs in dic_objects.values():
             if arg == objs.__class__.__name__:
@@ -148,7 +150,7 @@ class HBNBCommand(cmd.Cmd):
         print(counter)
 
     def default(self, arg):
- 
+
         __functions = {
             "all()": "self.do_all",
             "count()": "self.do_count",
@@ -168,9 +170,7 @@ class HBNBCommand(cmd.Cmd):
                 if arg_sp_tk[0] in ["show", "destroy", "update"]:
                     eval(__functions[arg_sp_tk[0]])(arg_sp[0], arg_sp_tk[1])
                     # eval("User.show("123")")
-                    #------------------self.do_show(arg_sp[0], arg_sp_tk[1])
-                    #                    User = arg_sp[0] .show=arg_sp_tk[0]("123" = arg_sp_tk[1])
-            # elif arg_sp[1] in ["show", "destroy", "update"]:
+                    # --------------self.do_show(arg_sp[0], arg_sp_tk[1])
         else:
             pass
 
@@ -185,9 +185,11 @@ class HBNBCommand(cmd.Cmd):
 # si arg[0] == 'NombreDelaclase' y el arg[1] == all + "()":
 # llamo a la funcion de do_all
 
+
 def parse(arg):
     "tokenize a string to a space divided 'arguments' tuple"
     return arg.split()
+
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()

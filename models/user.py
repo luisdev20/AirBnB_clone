@@ -6,7 +6,7 @@ from models.base_model import BaseModel
 
 class User(BaseModel):
     """Represents the User class with there arguments:
-    
+
     Args:
         email (str): The email of the user.
         password (str): The password of the user.

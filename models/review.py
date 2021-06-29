@@ -5,6 +5,7 @@ from models.base_model import BaseModel
 from models.place import Place
 from models.user import User
 
+
 class Review(BaseModel):
     """Represents the Review class inherit from BaseModel
 

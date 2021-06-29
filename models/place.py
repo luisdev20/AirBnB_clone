@@ -6,6 +6,7 @@ from models.city import City
 from models.user import User
 from models.amenity import Amenity
 
+
 class Place(BaseModel):
     """Represents the Place class inherit from BaseModel
 
@@ -33,4 +34,3 @@ class Place(BaseModel):
     latitude = 0.0
     longitude = 0.0
     amenity_ids = []
-    

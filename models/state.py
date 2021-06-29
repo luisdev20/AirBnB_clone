@@ -8,6 +8,6 @@ class State(BaseModel):
     """Represents the State class inherit from BaseModel with there arguments:
 
         Args:
-            name (Str): The name of the state. 
+        name (Str): The name of the state.
     """
-    name = ""    
+    name = ""
