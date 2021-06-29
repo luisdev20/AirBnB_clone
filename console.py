@@ -1,8 +1,8 @@
 #!/usr/bin/python3
 """Console that contains the entry point of the command interpreter."""
+
 import cmd
 from models.base_model import BaseModel
-from models.user import User
 from models.user import User
 from models.place import Place
 from models.state import State
@@ -10,6 +10,7 @@ from models.city import City
 from models.amenity import Amenity
 from models.review import Review
 import models
+import re
 
 dic_objects = models.storage.all()
 
@@ -83,8 +84,8 @@ class HBNBCommand(cmd.Cmd):
             print("** class doesn't exist **")
         elif len(arg_sp) == 1:
             print("** instance id missing **")
-        elif "{}.{}".format(arg_sp[0],arg_sp[1]) in dic_objects.keys():
-            del dic_objects["{}.{}".format(arg_sp[0],arg_sp[1])]
+        elif "{}.{}".format(arg_sp[0], arg_sp[1]) in dic_objects.keys():
+            del dic_objects["{}.{}".format(arg_sp[0], arg_sp[1])]
             models.storage.save()
         else:
             print("** no instance found **")
@@ -97,7 +98,6 @@ class HBNBCommand(cmd.Cmd):
         """
         arg_sp = arg.split()
         ouput_str = []
-
         if len(arg_sp) == 0:
             # imprimir todas las intancias de TODAS las clases
             for objs in dic_objects.values():
@@ -117,7 +117,7 @@ class HBNBCommand(cmd.Cmd):
 
         Usage: update <class name> <id> <attribute name> '<attribute value>'
         """
-        arg_sp = arg.split(" ", 3)
+        arg_sp = arg.split(" ")
 
         if len(arg_sp) == 0:
             print("** class name missing **")
@@ -125,20 +125,65 @@ class HBNBCommand(cmd.Cmd):
             print("** class doesn't exist **")
         elif len(arg_sp) == 1:
             print("** instance id missing **")
-        elif "{}.{}".format(arg_sp[0],arg_sp[1]) not in dic_objects.keys():
+        elif "{}.{}".format(arg_sp[0], arg_sp[1]) not in dic_objects.keys():
             print("** no instance found **")
         elif len(arg_sp) == 2:
             print("** attribute name missing **")
         elif len(arg_sp) == 3:
             print("** value missing **")       
         else:
+            format_key = "{}.{}".format(arg_sp[0], arg_sp[1])
             try:
-                setattr(dic_objects["{}.{}".format(arg_sp[0],arg_sp[1])], arg_sp[2], eval(arg_sp[3]))
+                setattr(dic_objects[format_key], arg_sp[2], eval(arg_sp[3]))
             except NameError:
-                setattr(dic_objects["{}.{}".format(arg_sp[0],arg_sp[1])], arg_sp[2], arg_sp[3])
+                setattr(dic_objects[format_key], arg_sp[2], arg_sp[3])
             models.storage.save()
 
-    
+    def do_count(self, arg):
+        #return self.do_all(arg).keys().count()
+        counter = 0
+        for objs in dic_objects.values():
+            if arg == objs.__class__.__name__:
+                counter += 1
+        print(counter)
+
+    def default(self, arg):
+ 
+        __functions = {
+            "all()": "self.do_all",
+            "count()": "self.do_count",
+            "show": "self.do_show",
+            "destroy": "self.do_destroy",
+            "update": "self.do_update",
+        }
+
+        arg_sp = arg.split(".")
+
+        if len(arg_sp) == 2 and arg_sp[0] in HBNBCommand.__classes:
+            if arg_sp[1] in ["all()", "count()"]:
+                # Esta condicion cumplira para el count y el all
+                eval(__functions[arg_sp[1]])(arg_sp[0])
+            else:
+                arg_sp_tk = re.split('\(|\)|,', arg_sp[1])
+                if arg_sp_tk[0] in ["show", "destroy", "update"]:
+                    eval(__functions[arg_sp_tk[0]])(arg_sp[0], arg_sp_tk[1])
+                    # eval("User.show("123")")
+                    #------------------self.do_show(arg_sp[0], arg_sp_tk[1])
+                    #                    User = arg_sp[0] .show=arg_sp_tk[0]("123" = arg_sp_tk[1])
+            # elif arg_sp[1] in ["show", "destroy", "update"]:
+        else:
+            pass
+
+# arg[0].arg[1] = BaseModel.all()
+
+# BaseModel.all()  <-- np implementado aun
+# all BaseModel   <--ya esta implementado
+#
+# [0:3] = all
+# [9:-1] = BaseModel
+# all.split('.')
+# si arg[0] == 'NombreDelaclase' y el arg[1] == all + "()":
+# llamo a la funcion de do_all
 
 def parse(arg):
     "tokenize a string to a space divided 'arguments' tuple"
