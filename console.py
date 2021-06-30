@@ -13,9 +13,6 @@ import models
 import re
 
 
-dic_objects = models.storage.all()
-
-
 class HBNBCommand(cmd.Cmd):
     """Defines a custom Holberton Command prompt
 
@@ -40,6 +37,7 @@ class HBNBCommand(cmd.Cmd):
 
     def do_EOF(self, arg):
         """EOF ends the console"""
+        print(" ")
         return True
 
     def emptyline(self):
@@ -53,16 +51,15 @@ class HBNBCommand(cmd.Cmd):
             print("** class name missing **")
         elif arg_sp[0] in HBNBCommand.__classes:
             # Creamos nueva instancia de la forma NombreInstancia()
-            new_ins = eval(arg_sp[0])()
+            print(eval(arg_sp[0])().id)
             models.storage.save()
-            print(new_ins.id)
         else:
             print("** class doesn't exist **")
 
     def do_show(self, arg):
         """Prints the string representation of an instance based on
         the class name and id"""
-
+        dic_objects = models.storage.all()
         arg_sp = arg.split()
         if len(arg_sp) == 0:
             print("** class name missing **")
@@ -78,7 +75,7 @@ class HBNBCommand(cmd.Cmd):
     def do_destroy(self, arg):
         """Deletes an instance based on the class name and id.
         Update the json file."""
-
+        dic_objects = models.storage.all()
         arg_sp = arg.split()
         if len(arg_sp) == 0:
             print("** class name missing **")
@@ -98,6 +95,7 @@ class HBNBCommand(cmd.Cmd):
         Args (optional):
             Class_name: to print instances of the given classname
         """
+        dic_objects = models.storage.all()
         arg_sp = arg.split()
         ouput_str = []
         if len(arg_sp) == 0:
@@ -120,7 +118,7 @@ class HBNBCommand(cmd.Cmd):
         Usage: update <class name> <id> <attribute name> '<attribute value>'
         """
         arg_sp = arg.split()
-
+        dic_objects = models.storage.all()
         if len(arg_sp) == 0:
             print("** class name missing **")
         elif arg_sp[0] not in HBNBCommand.__classes:
@@ -139,41 +137,49 @@ class HBNBCommand(cmd.Cmd):
                 setattr(dic_objects[format_key], arg_sp[2], eval(arg_sp[3]))
             except NameError:
                 setattr(dic_objects[format_key], arg_sp[2], arg_sp[3])
-        
         models.storage.save()
 
     def do_count(self, arg):
         # return self.do_all(arg).keys().count()
+        dic_objects = models.storage.all()
+        arg_sp = arg.split()
         counter = 0
         for objs in dic_objects.values():
-            if arg == objs.__class__.__name__:
+            if arg_sp[0] == objs.__class__.__name__:
                 counter += 1
         print(counter)
 
     def default(self, arg):
 
-        __functions = {
-            "all()": "self.do_all",
-            "count()": "self.do_count",
-            "show": "self.do_show",
-            "destroy": "self.do_destroy",
-            "update": "self.do_update",
+        functions = {
+            "all": self.do_all,
+            "count": self.do_count,
+            "show": self.do_show,
+            "destroy": self.do_destroy,
+            "update": self.do_update,
         }
 
-        arg_sp = arg.split(".")
+        arg = (arg.replace("(", ".").replace(")", ".")
+                .replace('"', "").replace(",", "").split("."))
 
-        if len(arg_sp) == 2 and arg_sp[0] in HBNBCommand.__classes:
-            if arg_sp[1] in ["all()", "count()"]:
-                # Esta condicion cumplira para el count y el all
-                eval(__functions[arg_sp[1]])(arg_sp[0])
-            else:
-                arg_sp_tk = re.split('\(|\)|,', arg_sp[1])
-                if arg_sp_tk[0] in ["show", "destroy", "update"]:
-                    eval(__functions[arg_sp_tk[0]])(arg_sp[0], arg_sp_tk[1])
-                    # eval("User.show("123")")
-                    # --------------self.do_show(arg_sp[0], arg_sp_tk[1])
-        else:
-            pass
+        try:
+            cmd_arg = arg[0] + " " + arg[2]
+            func = functions[arg[1]]
+            func(cmd_arg)
+        except:
+            print("*** Unknown syntax:", arg[0])   
+
+#        arg_sp = arg.split(".")
+
+#        if len(arg_sp) == 2 and arg_sp[0] in HBNBCommand.__classes:
+#            if arg_sp[1] in ["all()", "count()"]:
+#                # Esta condicion cumplira para el count y el all
+#                eval(__functions[arg_sp[1]])(arg_sp[0])
+#            else:
+#                arg_sp_tk = re.split('\(|\)|,', arg_sp[1])
+#                if arg_sp_tk[0] in ["show", "destroy", "update"]:
+#                    eval(__functions[arg_sp_tk[0]])(arg_sp[0], arg_sp_tk[1])
+
 
 # arg[0].arg[1] = BaseModel.all()
 
@@ -187,10 +193,9 @@ class HBNBCommand(cmd.Cmd):
 # llamo a la funcion de do_all
 
 
-def parse(arg):
-    "tokenize a string to a space divided 'arguments' tuple"
-    return arg.split()
-
+#def parse(arg):
+    #"tokenize a string to a space divided 'arguments' tuple"
+    #return arg.split()
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()

@@ -7,10 +7,12 @@ from uuid import uuid4
 from datetime import datetime
 from models.base_model import BaseModel
 import pep8
+import models
 
 
 class TestBaseModel(unittest.TestCase):
-    """" Test cases class """
+    """" Test cases class BaseModel"""
+
     def setUp(self) -> None:
         super().setUp()
         self.obj = BaseModel()
@@ -174,7 +176,34 @@ class TestBaseModel(unittest.TestCase):
         self.assertEqual(self.obj.name, 'Jhon')
         self.assertEqual(self.obj.age, 46)
 
-    
+    def test_new_instance_stored_in_objects(self):
+        self.assertIn(BaseModel(), models.storage.all().values())
+
+    def test_type_of_new_instance(self):
+        self.assertEqual(type(BaseModel()), BaseModel)
+
+    def test_different_id_in_two_instances(self):
+        ins1 = BaseModel()
+        ins2 = BaseModel()
+        self.assertNotEqual(ins1.id, ins2.id)
+
+    #def test_save_with_one_updates(self):
+       # ins1 = BaseModel()
+       #first_update
+
+    def test_edit_reserved_attributes(self):
+        id = "123-123"
+        now = datetime.now().isoformat()
+        my_dict = {
+            'id': id,
+            'name': 'Jhon Smith',
+            'created_at': now,
+            'updated_at': now
+        }
+
+        ins1 = BaseModel(**my_dict)
+        self.assertEqual(ins1.id, id)
+        # classname id create update
 
 if __name__ == "__main__":
     unittest.main()
