@@ -169,33 +169,6 @@ class HBNBCommand(cmd.Cmd):
         except:
             print("*** Unknown syntax:", arg[0])   
 
-#        arg_sp = arg.split(".")
-
-#        if len(arg_sp) == 2 and arg_sp[0] in HBNBCommand.__classes:
-#            if arg_sp[1] in ["all()", "count()"]:
-#                # Esta condicion cumplira para el count y el all
-#                eval(__functions[arg_sp[1]])(arg_sp[0])
-#            else:
-#                arg_sp_tk = re.split('\(|\)|,', arg_sp[1])
-#                if arg_sp_tk[0] in ["show", "destroy", "update"]:
-#                    eval(__functions[arg_sp_tk[0]])(arg_sp[0], arg_sp_tk[1])
-
-
-# arg[0].arg[1] = BaseModel.all()
-
-# BaseModel.all()  <-- np implementado aun
-# all BaseModel   <--ya esta implementado
-#
-# [0:3] = all
-# [9:-1] = BaseModel
-# all.split('.')
-# si arg[0] == 'NombreDelaclase' y el arg[1] == all + "()":
-# llamo a la funcion de do_all
-
-
-#def parse(arg):
-    #"tokenize a string to a space divided 'arguments' tuple"
-    #return arg.split()
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
