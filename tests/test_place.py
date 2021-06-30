@@ -37,7 +37,7 @@ class TestPlace(unittest.TestCase):
 
     def test_inherit_Place(self):
         new_inherit = Place()
-        self.assertNotIsInstance(type(new_inherit), BaseModel)
+        self.assertIsInstance(new_inherit, BaseModel)
 
 if __name__ == "__main__":
     unittest.main()

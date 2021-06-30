@@ -133,13 +133,15 @@ class HBNBCommand(cmd.Cmd):
             print("** value missing **")
         else:
             format_key = "{}.{}".format(arg_sp[0], arg_sp[1])
+            objeto = dic_objects[format_key]
             try:
-                setattr(dic_objects[format_key], arg_sp[2], eval(arg_sp[3]))
+                setattr(objeto, arg_sp[2], eval(arg_sp[3]))
             except NameError:
-                setattr(dic_objects[format_key], arg_sp[2], arg_sp[3])
-        models.storage.save()
+                setattr(objeto, arg_sp[2], arg_sp[3])
+        # models.storage.save() <-- error, no es el save que actualiza el update_at.
+        objeto.save()
 
-    def do_count(self, arg):
+    def do_count(self, arg): 
         # return self.do_all(arg).keys().count()
         dic_objects = models.storage.all()
         arg_sp = arg.split()
