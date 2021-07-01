@@ -1,16 +1,17 @@
 #!/usr/bin/python3
 """Console that contains the entry point of the command interpreter."""
 
+import re
 import cmd
-from models.base_model import BaseModel
+import models
+from shlex import split
+from models.city import City
 from models.user import User
 from models.place import Place
 from models.state import State
-from models.city import City
-from models.amenity import Amenity
 from models.review import Review
-import models
-import re
+from models.amenity import Amenity
+from models.base_model import BaseModel
 
 
 class HBNBCommand(cmd.Cmd):
@@ -46,7 +47,7 @@ class HBNBCommand(cmd.Cmd):
 
     def do_create(self, arg):
         """Creates a new instance of BaseModel and save to JSON file"""
-        arg_sp = arg.split()
+        arg_sp = split(arg)
         if len(arg_sp) == 0:
             print("** class name missing **")
         elif arg_sp[0] in HBNBCommand.__classes:
@@ -60,7 +61,7 @@ class HBNBCommand(cmd.Cmd):
         """Prints the string representation of an instance based on
         the class name and id"""
         dic_objects = models.storage.all()
-        arg_sp = arg.split()
+        arg_sp = split(arg)
         if len(arg_sp) == 0:
             print("** class name missing **")
         elif arg_sp[0] not in HBNBCommand.__classes:
@@ -76,7 +77,7 @@ class HBNBCommand(cmd.Cmd):
         """Deletes an instance based on the class name and id.
         Update the json file."""
         dic_objects = models.storage.all()
-        arg_sp = arg.split()
+        arg_sp = split(arg)
         if len(arg_sp) == 0:
             print("** class name missing **")
         elif arg_sp[0] not in HBNBCommand.__classes:
@@ -96,7 +97,7 @@ class HBNBCommand(cmd.Cmd):
             Class_name: to print instances of the given classname
         """
         dic_objects = models.storage.all()
-        arg_sp = arg.split()
+        arg_sp = split(arg)
         ouput_str = []
         if len(arg_sp) == 0:
             # imprimir todas las intancias de TODAS las clases
@@ -117,34 +118,39 @@ class HBNBCommand(cmd.Cmd):
 
         Usage: update <class name> <id> <attribute name> '<attribute value>'
         """
-        arg_sp = arg.split()
+
+        arg_sp = split(arg)
+        #arg_sp = arg.split()
         dic_objects = models.storage.all()
+        format_key = "{}.{}".format(arg_sp[0], arg_sp[1])
+
         if len(arg_sp) == 0:
             print("** class name missing **")
         elif arg_sp[0] not in HBNBCommand.__classes:
             print("** class doesn't exist **")
         elif len(arg_sp) == 1:
             print("** instance id missing **")
-        elif "{}.{}".format(arg_sp[0], arg_sp[1]) not in dic_objects.keys():
+        elif format_key not in dic_objects.keys():
             print("** no instance found **")
         elif len(arg_sp) == 2:
             print("** attribute name missing **")
         elif len(arg_sp) == 3:
             print("** value missing **")
         else:
-            format_key = "{}.{}".format(arg_sp[0], arg_sp[1])
             objeto = dic_objects[format_key]
-            try:
-                setattr(objeto, arg_sp[2], eval(arg_sp[3]))
-            except NameError:
+            if len(arg_sp[3].split()) == 1:
+                try:
+                    setattr(objeto, arg_sp[2], eval(arg_sp[3]))
+                except NameError or ValueError:
+                    setattr(objeto, arg_sp[2], arg_sp[3])
+            else:
                 setattr(objeto, arg_sp[2], arg_sp[3])
-        # models.storage.save() <-- error, no es el save que actualiza el update_at.
         objeto.save()
 
     def do_count(self, arg): 
         # return self.do_all(arg).keys().count()
         dic_objects = models.storage.all()
-        arg_sp = arg.split()
+        arg_sp = split(arg)
         counter = 0
         for objs in dic_objects.values():
             if arg_sp[0] == objs.__class__.__name__:
@@ -163,14 +169,12 @@ class HBNBCommand(cmd.Cmd):
 
         arg = (arg.replace("(", ".").replace(")", ".")
                 .replace('"', "").replace(",", "").split("."))
-
         try:
             cmd_arg = arg[0] + " " + arg[2]
             func = functions[arg[1]]
             func(cmd_arg)
         except:
-            print("*** Unknown syntax:", arg[0])   
-
+            print("*** Unknown syntax:", arg[0])
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
