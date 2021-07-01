@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+"""Represents the city class"""
 
 from models.base_model import BaseModel
 from models.state import State

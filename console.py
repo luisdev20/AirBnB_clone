@@ -148,6 +148,7 @@ class HBNBCommand(cmd.Cmd):
             objeto.save()
 
     def do_count(self, arg):
+        """Counts the number of instances"""
         # return self.do_all(arg).keys().count()
         dic_objects = models.storage.all()
         arg_sp = split(arg)
@@ -158,7 +159,7 @@ class HBNBCommand(cmd.Cmd):
         print(counter)
 
     def default(self, arg):
-
+        """Default behaviour of arguments passed by line input"""
         functions = {
             "all": self.do_all,
             "count": self.do_count,
