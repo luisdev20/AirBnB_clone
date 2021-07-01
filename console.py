@@ -129,7 +129,7 @@ class HBNBCommand(cmd.Cmd):
             print("** class doesn't exist **")
         elif len(arg_sp) == 1:
             print("** instance id missing **")
-        elif format_key not in dic_objects.keys():
+        elif "{}.{}".format(arg_sp[0], arg_sp[1]) not in dic_objects.keys():
             print("** no instance found **")
         elif len(arg_sp) == 2:
             print("** attribute name missing **")
