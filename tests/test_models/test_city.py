@@ -5,22 +5,10 @@
 import unittest
 from models.base_model import BaseModel
 from models.city import City
-import pep8
 
 
 class TestCity(unittest.TestCase):
     """" Test cases class of City """
-
-    def test_pep8_city(self):
-        """pep8 test.
-        Makes sure the Python code is up to the pep8 standard.
-        """
-        syntax = pep8.StyleGuide(quit=True)
-        check = syntax.check_files(['models/city.py'])
-        self.assertEqual(
-            check.total_errors, 0,
-            "Found code style errors (and warnings)."
-        )
 
     def test_hasattr(self):
         new_city = City()
