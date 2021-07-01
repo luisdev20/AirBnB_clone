@@ -145,7 +145,7 @@ class HBNBCommand(cmd.Cmd):
                     setattr(objeto, arg_sp[2], arg_sp[3])
             else:
                 setattr(objeto, arg_sp[2], arg_sp[3])
-        objeto.save()
+            objeto.save()
 
     def do_count(self, arg):
         # return self.do_all(arg).keys().count()

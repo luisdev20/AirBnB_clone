@@ -101,3 +101,6 @@ class testFileStorage(unittest.TestCase):
             self.assertTrue(True)
         except:
             self.assertTrue(False)
+
+if __name__ == "__main__":
+    unittest.main()
