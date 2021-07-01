@@ -4,10 +4,10 @@
 """
 import unittest
 from models.base_model import BaseModel
-from models.city import City
+from models.amenity import Amenity
 import pep8
 
-class TestCity(unittest.TestCase):
+class TestAmenity(unittest.TestCase):
     """" Test cases class of City """
 
     def test_pep8_city(self):
@@ -15,25 +15,23 @@ class TestCity(unittest.TestCase):
         Makes sure the Python code is up to the pep8 standard.
         """
         syntax = pep8.StyleGuide(quit=True)
-        check = syntax.check_files(['models/city.py'])
+        check = syntax.check_files(['models/amenity.py'])
         self.assertEqual(
             check.total_errors, 0,
             "Found code style errors (and warnings)."
         )
 
     def test_hasattr(self):
-        new_city = City()
-        self.assertTrue(hasattr(new_city, "state_id"))
-        self.assertTrue(hasattr(new_city, "name"))
+        new_amenity = Amenity()
+        self.assertTrue(hasattr(new_amenity, "name"))
 
-    def test_city(self):
-        new_state = City()
-        self.assertIs(type(new_state.state_id), str)
-        self.assertIs(type(new_state.name), str)
+    def test_amenity(self):
+        new_amenity = Amenity()
+        self.assertIs(type(new_amenity.name), str)
 
-    def test_inherit_City(self):
-        new_inherit = City()
-        self.assertNotIsInstance(type(new_inherit), BaseModel)
+    def test_inherit_amenity(self):
+        new_inherit = Amenity()
+        self.assertIsInstance(new_inherit, BaseModel)
 
 if __name__ == "__main__":
     unittest.main()
