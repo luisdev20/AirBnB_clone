@@ -21,6 +21,20 @@ class TestPlace(unittest.TestCase):
             "Found code style errors (and warnings)."
         )
 
+    def test_hasattr(self):
+        new_place = Place()
+        self.assertTrue(hasattr(new_place, "city_id"))
+        self.assertTrue(hasattr(new_place, "user_id"))
+        self.assertTrue(hasattr(new_place, "name"))
+        self.assertTrue(hasattr(new_place, "description"))
+        self.assertTrue(hasattr(new_place, "number_rooms"))
+        self.assertTrue(hasattr(new_place, "number_bathrooms"))
+        self.assertTrue(hasattr(new_place, "max_guest"))
+        self.assertTrue(hasattr(new_place, "price_by_night"))
+        self.assertTrue(hasattr(new_place, "latitude"))
+        self.assertTrue(hasattr(new_place, "longitude"))
+        self.assertTrue(hasattr(new_place, "amenity_ids"))
+
     def test_place(self):
         new_place = Place()
         self.assertIs(type(new_place.city_id), str)

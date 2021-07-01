@@ -138,10 +138,11 @@ class HBNBCommand(cmd.Cmd):
                 setattr(objeto, arg_sp[2], eval(arg_sp[3]))
             except NameError:
                 setattr(objeto, arg_sp[2], arg_sp[3])
-        # models.storage.save() <-- error, no es el save que actualiza el update_at.
+        # models.storage.save() <-- error, no es el
+        # save que actualiza el update_at.
         objeto.save()
 
-    def do_count(self, arg): 
+    def do_count(self, arg):
         # return self.do_all(arg).keys().count()
         dic_objects = models.storage.all()
         arg_sp = arg.split()
@@ -162,14 +163,14 @@ class HBNBCommand(cmd.Cmd):
         }
 
         arg = (arg.replace("(", ".").replace(")", ".")
-                .replace('"', "").replace(",", "").split("."))
+               .replace('"', "").replace(",", "").split("."))
 
         try:
             cmd_arg = arg[0] + " " + arg[2]
             func = functions[arg[1]]
             func(cmd_arg)
         except:
-            print("*** Unknown syntax:", arg[0])   
+            print("*** Unknown syntax:", arg[0])
 
 
 if __name__ == '__main__':

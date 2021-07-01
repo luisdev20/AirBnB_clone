@@ -26,9 +26,14 @@ class TestCity(unittest.TestCase):
         self.assertIs(type(new_state.state_id), str)
         self.assertIs(type(new_state.name), str)
 
+    def test_hasattr(self):
+        new_city = City()
+        self.assertTrue(hasattr(new_city, "state_id"))
+        self.assertTrue(hasattr(new_city, "name"))
+
     def test_inherit_City(self):
         new_inherit = City()
-        self.assertNotIsInstance(type(new_inherit), BaseModel)
+        self.assertIsInstance(new_inherit, BaseModel)
 
 
 if __name__ == "__main__":

@@ -5,6 +5,7 @@ import unittest
 from models.base_model import BaseModel
 from datetime import datetime
 
+
 class TestInit(unittest.TestCase):
     """Define unittest for __init__()."""
 
