@@ -122,7 +122,6 @@ class HBNBCommand(cmd.Cmd):
         arg_sp = split(arg)
         # arg_sp = arg.split()
         dic_objects = models.storage.all()
-        format_key = "{}.{}".format(arg_sp[0], arg_sp[1])
 
         if len(arg_sp) == 0:
             print("** class name missing **")
@@ -137,6 +136,7 @@ class HBNBCommand(cmd.Cmd):
         elif len(arg_sp) == 3:
             print("** value missing **")
         else:
+            format_key = "{}.{}".format(arg_sp[0], arg_sp[1])
             objeto = dic_objects[format_key]
             if len(arg_sp[3].split()) == 1:
                 try:
