@@ -7,6 +7,7 @@ from models.place import Place
 from models.base_model import BaseModel
 import pep8
 
+
 class TestPlace(unittest.TestCase):
     """" Test cases class of Place """
 
@@ -52,6 +53,7 @@ class TestPlace(unittest.TestCase):
     def test_inherit_Place(self):
         new_inherit = Place()
         self.assertIsInstance(new_inherit, BaseModel)
+
 
 if __name__ == "__main__":
     unittest.main()

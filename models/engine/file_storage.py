@@ -11,7 +11,6 @@ from models.review import Review
 import json
 
 
-
 class FileStorage:
     """Serializes and deserializes JSON file to instances and vice
 
@@ -34,7 +33,8 @@ class FileStorage:
 
     def save(self):
         """Serializes __objects to the JSON file (path: __file_path)"""
-        json_data = {key: obj.to_dict() for key, obj in FileStorage.__objects.items()}
+        json_data = {key: obj.to_dict() for key, obj in FileStorage.
+                     __objects.items()}
         # key: obj.to_dict()
         with open(FileStorage.__file_path, mode='w') as json_f:
             json.dump(json_data, json_f)

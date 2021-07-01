@@ -7,6 +7,7 @@ from models.user import User
 from models.base_model import BaseModel
 import pep8
 
+
 class TestUser(unittest.TestCase):
     """" Test cases class of User """
 
@@ -38,6 +39,7 @@ class TestUser(unittest.TestCase):
     def test_inherit_User(self):
         new_inherit = User()
         self.assertIsInstance(new_inherit, BaseModel)
+
 
 if __name__ == "__main__":
     unittest.main()

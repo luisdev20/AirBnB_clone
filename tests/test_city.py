@@ -7,6 +7,7 @@ from models.base_model import BaseModel
 from models.city import City
 import pep8
 
+
 class TestCity(unittest.TestCase):
     """" Test cases class of City """
 
@@ -20,6 +21,11 @@ class TestCity(unittest.TestCase):
             check.total_errors, 0,
             "Found code style errors (and warnings)."
         )
+
+    def test_hasattr(self):
+        new_city = City()
+        self.assertTrue(hasattr(new_city, "state_id"))
+        self.assertTrue(hasattr(new_city, "name"))
 
     def test_city(self):
         new_state = City()

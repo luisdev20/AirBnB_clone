@@ -4,8 +4,9 @@
 """
 import unittest
 from models.review import Review
-import pep8
 from models.base_model import BaseModel
+import pep8
+
 
 class TestReview(unittest.TestCase):
     """" Test cases class of Review """
@@ -26,7 +27,7 @@ class TestReview(unittest.TestCase):
         self.assertTrue(hasattr(new_review, "place_id"))
         self.assertTrue(hasattr(new_review, "user_id"))
         self.assertTrue(hasattr(new_review, "text"))
- 
+
     def test_review(self):
         new_review = Review()
         self.assertIs(type(new_review.place_id), str)

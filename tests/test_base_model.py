@@ -30,7 +30,6 @@ class TestBaseModel(unittest.TestCase):
         )
 
     def test_attr_types(self):
-        
         self.assertIs(type(self.obj.id), str)
         self.assertIs(type(self.obj.created_at), datetime)
         self.assertIs(type(self.obj.updated_at), datetime)
@@ -187,10 +186,6 @@ class TestBaseModel(unittest.TestCase):
         ins2 = BaseModel()
         self.assertNotEqual(ins1.id, ins2.id)
 
-    #def test_save_with_one_updates(self):
-       # ins1 = BaseModel()
-       #first_update
-
     def test_edit_reserved_attributes(self):
         id = "123-123"
         now = datetime.now().isoformat()
@@ -204,6 +199,7 @@ class TestBaseModel(unittest.TestCase):
         ins1 = BaseModel(**my_dict)
         self.assertEqual(ins1.id, id)
         # classname id create update
+
 
 if __name__ == "__main__":
     unittest.main()

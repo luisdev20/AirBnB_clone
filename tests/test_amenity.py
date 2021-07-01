@@ -7,6 +7,7 @@ from models.base_model import BaseModel
 from models.amenity import Amenity
 import pep8
 
+
 class TestAmenity(unittest.TestCase):
     """" Test cases class of City """
 
