@@ -1,4 +1,7 @@
-[agregar aqui imagen (opcional)]
+<p align="center">
+<img src="img/download.png" alt="My logo of Holberton"/>
+</p>
+
 # AirBnB_clone
 Airbnb clone is an online solution that helps in building full-fledged and outstanding online rental platform like Airbnb. This is because a readymade Airbnb clone will include all significant features to arrive at an impressive online rental platform quickly and easily. A dynamically adaptable Airbnb clone solution will suit multitudinous online rental business models and concepts. So, whatever may be rental business ideas like a vacation rental, boat rental, vehicle rental, equipment rental, etc, you can give wings to your dreams with a versatile Airbnb clone. To say in a nutshell, to materialize your online rental business dreams within your budget and a short timeframe, there is no better option other than to go for a ready-to-use and comprehensive Airbnb clone solution.
 # Installation
@@ -17,9 +20,24 @@ $ (hbnb)
 $ 
 ```
 # Algorithm
-[AGREGAR AQUI UNA IMG]
+
+<p align="center">
+<img src="img/Algo.png" alt="My logo of Holberton"/>
+</p>
+
+<p align="center">
+<img src="img/POO.png" alt="My logo of Holberton"/>
+</p>
+
 # Example
-[AGREGAR AQUI IMAGENES DEL PROYECTO]
+
+<p align="center">
+<img src="img/ex.png" alt="My logo of Holberton"/>
+</p>
+
+<p align="center">
+<img src="img/exJson.png" alt="My logo of Holberton"/>
+</p>
 
 # Authors
 Eddie Huaripayta <eddiejesus1197@gmail.com>
